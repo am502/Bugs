@@ -30,9 +30,9 @@ INSERT INTO lots VALUES (3, 2, 100);
 
 INSERT INTO positions VALUES (6, 3, 5);
 
-SELECT pr.name, SUM(s.cost) AS lots_cost, SUM(s.c) AS positions_count FROM (
+SELECT pr.name, COALESCE(SUM(s.cost), 0) AS lots_cost, COALESCE(SUM(s.c), 0) AS positions_count FROM (
   SELECT pr.id, l.cost, SUM(po.count) AS c FROM procedures pr
-  INNER JOIN lots l ON pr.id = l.procedure_id
-  INNER JOIN positions po ON l.id = po.lot_id
+  LEFT JOIN lots l ON pr.id = l.procedure_id
+  LEFT JOIN positions po ON l.id = po.lot_id
   GROUP BY pr.id, l.id
 ) s INNER JOIN procedures pr ON s.id = pr.id GROUP BY pr.id;

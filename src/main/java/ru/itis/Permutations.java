@@ -23,11 +23,8 @@ public class Permutations {
     }
 
     private static void permutations(int[] array, int start) {
-        if (start + 1 == array.length - 1) {
-            int[] clonedArray = array.clone();
-            swap(clonedArray, start, array.length - 1);
+        if (start == array.length - 1) {
             permutations.add(array);
-            permutations.add(clonedArray);
         }
         for (int i = start; i < array.length; i++) {
             int[] clonedArray = array.clone();
